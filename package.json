@@ -1,18 +1,18 @@
 {
-  "name": "DJEN",
+  "name": "octogon.io",
   "version": "1.2.0",
-  "description": "A metal breakdown generator.",
-  "author": "Ross McMillan - @RossMcMillan92",
+  "description": "Extending DJEN, a music breakdown generator.",
+  "author": "Ross McMillan - @RossMcMillan92, Marty McGee - @CompanyJuice",
   "main": "",
   "scripts": {
     "spec": "jest --verbose --colors --verbose --coverage",
     "spec:watch": "jest --watch --colors",
     "start": "node tools/wizard.js",
-    "phonegap": "NODE_ENV=production node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --env.isPhoneGap=true --colors",
-    "phonegapdev": "NODE_ENV=development node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --env.isPhoneGap=true --colors --watch",
-    "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --colors",
-    "dev": "NODE_ENV=development node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --watch --hot --inline --config=webpack.config.js --env.platform=generic --env.isPhoneGap=false --colors",
-    "prod": "NODE_ENV=production node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --watch --config=webpack.config.js --env.platform=generic --env.isPhoneGap=false --colors",
+    "phonegap": "SET NODE_ENV=production & node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --env.isPhoneGap=true --colors",
+    "phonegapdev": "SET NODE_ENV=development & node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --env.isPhoneGap=true --colors --watch",
+    "build": "SET NODE_ENV=production & node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --colors",
+    "dev": "SET NODE_ENV=development & node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --watch --hot --inline --config=webpack.config.js --env.platform=generic --env.isPhoneGap=false --colors",
+    "prod": "SET NODE_ENV=production & node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --watch --config=webpack.config.js --env.platform=generic --env.isPhoneGap=false --colors",
     "analyse": "node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --colors --json | node node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer"
   },
   "dependencies": {
@@ -45,6 +45,7 @@
     "webpack-bundle-size-analyzer": "^2.7.0"
   },
   "devDependencies": {
+    "@material-ui/core": "^3.5.1",
     "autoprefixer": "^7.1.6",
     "autoprefixer-core": "^6.0.1",
     "babel": "^6.23.0",
