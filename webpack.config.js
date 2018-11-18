@@ -106,11 +106,12 @@ const config = (env) => {
     devServer: {
       compress: isProduction,
       port: 3002,
-      host: '0.0.0.0',
+      host: '127.0.0.1',
       publicPath: '/',
       contentBase: path.join(cwd, buildDir),
       historyApiFallback: true,
       hot: true,
+      https: false, // true for self-signed, object for cert authority
       inline: true,
       stats: {
         assets: true,
