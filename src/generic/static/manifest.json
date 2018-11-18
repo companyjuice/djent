@@ -1,9 +1,9 @@
 {
   "lang": "en",
   "dir": "ltr",
-  "name": "DJEN",
-  "description": "Metal Generator",
-  "short_name": "DJEN",
+  "name": "octogon.io",
+  "description": "Music Generator",
+  "short_name": "octogon.io",
   "icons": [
         {
             "src": "/assets/images/icon.png",

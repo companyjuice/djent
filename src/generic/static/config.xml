@@ -1,9 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="co.djen.mdjen" version="1.2.0" xmlns="http://w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>DJEN</name>
+    <name>octogon.io</name>
     <description>
-        Metal breakdown generator
+        Music breakdown generator
     </description>
+    <author href="http://marty-mcgee.com" email="mcgee.marty@gmail.com">
+        Marty McGee
+    </author>
     <author href="http://rossmcmillan.co.uk" email="rossmcmillan92@gmail.com">
         Ross McMillan
     </author>
