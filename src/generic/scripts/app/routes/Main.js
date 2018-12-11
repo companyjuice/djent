@@ -11,6 +11,14 @@ import SwipeableViews from 'components/SwipeableViews'
 import Modal from 'containers/Modal'
 import Player from 'containers/Player'
 
+// [MM]
+//import NavBar from 'components/NavBar'
+//import CourseList from 'components/CourseList'
+
+// [MM] chat
+//import PropTypes from 'prop-types'
+
+
 import { defaultAllowedLengths } from 'reducers/sequences.initial-state'
 
 import { backwardsCompatibility } from 'utils/presets'
@@ -34,10 +42,12 @@ export default class Main extends Component {
         childrenLoaded: false,
     }
 
+
     componentWillMount = () => {
         this.setupBackButtonController()
         const { params, presets } = this.props
         const shareID = params.shareID
+
 
         handleGoogleAPI()
             .fork(logError, () => {
@@ -201,6 +211,12 @@ export default class Main extends Component {
             )
             : (
                 <div>
+
+                    {/* [MM] chat */}
+                    <div style={{height: '100%'}} >
+                        {this.props.children}
+                    </div>
+
                     <Player
                         route={this.props.route}
                         googleAPIHasLoaded={this.state.googleAPIHasLoaded}
@@ -251,6 +267,11 @@ export default class Main extends Component {
 
         return (
             <div className="site">
+
+                {/* // [MM] 
+                <NavBar /> */}
+                {/* <CourseList /> */}
+
                 <Modal />
                 <div className="site__content" ref="content">
                     { views }

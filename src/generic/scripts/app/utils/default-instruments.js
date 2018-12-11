@@ -48,7 +48,7 @@ const getInstrument = (
 const defaultInstruments = [
   getInstrument(
     'g',
-    'Rythm Guitar/Bass (Drop G#)',
+    'Rhythm Guitar/Bass (Drop G#)',
     ['CUSTOM_SEQUENCE_1'],
     [
       getSound(

@@ -11,7 +11,7 @@ const preset = {
             "beats": 4
         }, {
             "id": "CUSTOM_SEQUENCE_1",
-            "description": "Chord Rythm",
+            "description": "Chord Rhythm",
             "bars": 4,
             "beats": 4,
             "hitChance": 1,
