@@ -3,34 +3,34 @@ import { assoc, compose, last, map, split, traverse } from 'ramda'
 import { Future as Task } from 'ramda-fantasy'
 import { List } from 'immutable-ext'
 
-import Expandable from 'components/Expandable'
-import Panel from 'components/Panel'
-import Spinner from 'components/Spinner'
-import SwipeableViews from 'components/SwipeableViews'
+import Expandable from '../components/Expandable'
+import Panel from '../components/Panel'
+import Spinner from '../components/Spinner'
+import SwipeableViews from '../components/SwipeableViews'
 
-import Modal from 'containers/Modal'
-import Player from 'containers/Player'
+import Modal from '../containers/Modal'
+import Player from '../containers/Player'
 
 // [MM]
-//import NavBar from 'components/NavBar'
-//import CourseList from 'components/CourseList'
+//import NavBar from '../components/NavBar'
+//import CourseList from '../components/CourseList'
 
 // [MM] chat
 //import PropTypes from 'prop-types'
 
 
-import { defaultAllowedLengths } from 'reducers/sequences.initial-state'
+import { defaultAllowedLengths } from '../reducers/sequences.initial-state'
 
-import { backwardsCompatibility } from 'utils/presets'
-import { getActiveSoundsFromHitTypes } from 'utils/instruments'
-import { getLongURLFromShareID, getPresetFromData, handleGoogleAPI } from 'utils/short-urls'
+import { backwardsCompatibility } from '../utils/presets'
+import { getActiveSoundsFromHitTypes } from '../utils/instruments'
+import { getLongURLFromShareID, getPresetFromData, handleGoogleAPI } from '../utils/short-urls'
 
 import {
     presetToPlaylistItem,
-} from 'utils/riffs'
+} from '../utils/riffs'
 
-import { isMobile } from 'utils/mobile'
-import { getHashQueryParam, logError, throttle } from 'utils/tools'
+import { isMobile } from '../utils/mobile'
+import { getHashQueryParam, logError, throttle } from '../utils/tools'
 
 let Instruments
 let Sequences

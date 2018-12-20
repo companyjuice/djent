@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { compose } from 'ramda'
-import { roundToXPlaces } from 'utils/tools'
-import M from 'libraries/Modernizr'
+import { roundToXPlaces } from '../utils/tools'
+import M from '../libraries/Modernizr'
 
 const RESISTANCE_COEF = 0.4
 const UNCERTAINTY_THRESHOLD = 3 // px

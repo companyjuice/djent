@@ -1,5 +1,5 @@
-import getAbsolutePath from 'modules/getAbsolutePath'
-import isPhoneGap from 'modules/phonegap'
+import getAbsolutePath from '../modules/getAbsolutePath'
+import isPhoneGap from '../modules/phonegap'
 
 const rootOctave = 1
 const getMidiNote = (note, octave) => note + (rootOctave + octave)

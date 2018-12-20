@@ -1,3 +1,6 @@
 /* eslint no-undef: 0 */
-const isPhoneGap = IS_PHONEGAP
+// [MM] chat
+//const isPhoneGap = IS_PHONEGAP
+const isPhoneGap = false
+
 export default isPhoneGap

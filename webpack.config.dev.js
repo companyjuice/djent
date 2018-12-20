@@ -1,7 +1,9 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
+const nodeEnv = process.env.NODE_ENV || 'development'
 
 module.exports = {
+  mode: nodeEnv,
   devtool: 'inline-source-map',
   entry: [
     'babel-polyfill',
@@ -15,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
@@ -23,10 +25,10 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           plugins: [
             [
@@ -47,7 +49,7 @@ module.exports = {
       },
       {
         test: /\.css?$/,
-        loaders: ['style', 'raw']
+        loaders: ['style-loader', 'raw-loader']
       }
     ]
   }

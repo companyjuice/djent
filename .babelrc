@@ -5,7 +5,8 @@
         "transform-class-properties"
     ],
     "presets": [
-        ["es2015", { "modules": false }],
+        "@babel/preset-env",
+        ["es2015", { "modules": "commonjs" }],
         "react",
         "stage-0"
     ],

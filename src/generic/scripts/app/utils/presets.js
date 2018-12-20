@@ -1,10 +1,10 @@
 import deepEqual from 'deep-equal'
 import { __, compose, curry, indexOf, isNil, map, update } from 'ramda'
 import { Maybe } from 'ramda-fantasy'
-import configInitialState from 'reducers/config.initial-state'
-import sequencesInitialState from 'reducers/sequences.initial-state'
-import instrumentsInitialState from 'utils/default-instruments'
-import { getAllowedLengthsFromSequence } from 'utils/sequences'
+import configInitialState from '../reducers/config.initial-state'
+import sequencesInitialState from '../reducers/sequences.initial-state'
+import instrumentsInitialState from '../utils/default-instruments'
+import { getAllowedLengthsFromSequence } from '../utils/sequences'
 
 const createPresetFactory = ({
     configInitialState: _configInitialState,

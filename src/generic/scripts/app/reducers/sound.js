@@ -1,7 +1,7 @@
 import { compose, identity, map } from 'ramda'
 import { Maybe } from 'ramda-fantasy'
-import { LOOP_MODE, LOOP_MODE_DEFAULT } from 'constants/localStorage'
-import { safeGetLocalStorageIO } from 'modules/localStorageIO'
+import { LOOP_MODE, LOOP_MODE_DEFAULT } from '../constants/localStorage'
+import { safeGetLocalStorageIO } from '../modules/localStorageIO'
 
 //    getLoopModeValue :: Key -> IO Maybe a
 const getLoopModeValue = loopModeDefault => compose(

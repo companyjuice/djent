@@ -7,29 +7,37 @@ import mongoose from 'mongoose';
 
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import React from 'react';
+import React from 'react'
 import configureStore from '../generic/scripts/app/store/configureStore'
-import { RouterContext, match } from 'react-router';
-import routes from '../generic/scripts/app/routes';
+import { RouterContext, match } from 'react-router'
+import routes from '../generic/scripts/app/routes-chat'
 import createHistory from 'history/createMemoryHistory'
-import DevTools from '../generic/scripts/app/containers/DevTools';
-import cors from 'cors';
-import webpack from 'webpack';
+import DevTools from '../generic/scripts/app/containers/DevTools'
+import cors from 'cors'
+import webpack from 'webpack'
 // [MM]
 import webpackConfig from '../../webpack.config.dev'
 //import webpackConfig from '../../webpack.config'
-const compiler = webpack(webpackConfig);
-import User from './models/User.js';
-import passport from 'passport';
-require('../../config/passport')(passport);
-import SocketIo from 'socket.io';
-const app = express();
-//set env vars
-process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
-process.env.PORT = process.env.PORT || 3003;
+const compiler = webpack(webpackConfig)
+import User from './models/User'
+import passport from 'passport'
+require('../../config/passport')(passport)
+import SocketIo from 'socket.io'
 
+const app = express()
+
+//set env vars
+process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev'
+process.env.PORT = process.env.PORT || 3000
 // connect our DB
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGOLAB_URI)
+console.log(
+  `
+  ===
+  [MM] CONNECTED TO DB
+  ===
+  `
+)
 
 process.on('uncaughtException', function (err) {
   console.log(err);
@@ -37,13 +45,24 @@ process.on('uncaughtException', function (err) {
 app.use(cors());
 app.use(passport.initialize());
 
+console.log(
+  `
+  ===
+  ${compiler}
+  ===
+  ${webpackConfig.output.publicPath}
+  ===
+  `
+)
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath
 }));
 app.use(require('webpack-hot-middleware')(compiler));
 
-//load routers
+
+// load routers
 const messageRouter = express.Router();
 const usersRouter = express.Router();
 const channelRouter = express.Router();
@@ -89,7 +108,8 @@ app.get('/*', function(req, res) {
       <Provider className="root" store={store}>
         <div style={{height: '100%'}}>
           <RouterContext {...renderProps} />
-          {process.env.NODE_ENV !== 'production' && <DevTools />}
+          {/* {process.env.NODE_ENV !== 'production' && <DevTools />} */}
+          <DevTools />
         </div>
       </Provider>
     );

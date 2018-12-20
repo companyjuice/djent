@@ -1,4 +1,9 @@
-import initialState from './config.initial-state'
+// [MM] chat
+//if (typeof(window) !== 'undefined') {
+    import initialState from './config.initial-state'
+//} else {
+//    var initialState = null 
+//}
 
 export default function configReducer(state = { ...initialState }, action) {
     const { type, payload } = action

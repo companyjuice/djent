@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
-const nodeEnv = process.env.NODE_ENV
+const nodeEnv = process.env.NODE_ENV || 'development'
 const isProduction = nodeEnv === 'production'
 
 const sourceDir = '/src'
@@ -35,6 +35,8 @@ const config = (env) => {
   const assetPathPrepend = isPhoneGap ? '' : '/'
 
   return {
+    mode: 'development',
+    devtool: 'inline-source-map',
     entry: {
       main: ['react-hot-loader/patch', path.join(cwd, entryJSFile)],
       vendorReact: [
@@ -166,9 +168,9 @@ const config = (env) => {
             comments: false,
           },
         }),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'vendorReact', 'manifest'],
-      }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   names: ['vendor', 'vendorReact', 'manifest'],
+      // }),
       new HtmlWebpackPlugin({
         template: './src/generic/static/index.ejs',
         inject: 'body',

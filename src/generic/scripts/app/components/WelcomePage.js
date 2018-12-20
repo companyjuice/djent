@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { welcomePage } from '../actions/actions'
 import { connect } from 'react-redux'
-import { Button } from 'react-bootstrap' //Input
+import { Button, Form, FormGroup, FormControl } from 'react-bootstrap' // Input
 import FBSignIn from './FBSignIn'
 import SignIn from './SignIn'
 
@@ -38,30 +38,34 @@ class WelcomePage extends Component {
       return (
         <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
           <header style={{textAlign: 'center'}}>
-            <p>Welcome to React Redux Socket.io Chat</p>
-            <p>This is an open source chat program.</p>
+            <p>OCTOGON.IO</p>
+            <p>This is an open source group music recording program.</p>
           </header>
           <main>
-          <form>
-          {/* <Input
-            style={{height: '2.7em', fontSize: '1.3em', width: '100%'}}
-            ref="usernameInput"
-            type="text"
-            name="username"
-            value={this.state.username}
-            placeholder="Enter username"
-            onChange={::this.handleChange}
-          /> */}
-            <Link to="/signup">
-              <Button
-                bsStyle="success"
-                style={{width: '100%'}}
-                type="submit"
-                onClick={::this.handleSubmit}>
-                  <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
-              </Button>
-            </Link>
-            </form>
+            <Form>
+              <FormGroup
+                controlId="formBasicTextMM3"
+              >
+                <FormControl
+                  style={{height: '2.7em', fontSize: '1.3em', width: '100%'}}
+                  ref="usernameInput"
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  placeholder="Enter username"
+                  onChange={::this.handleChange}
+                />
+                <Link to="/signup">
+                  <Button
+                    bsStyle="success"
+                    style={{width: '100%'}}
+                    type="submit"
+                    onClick={::this.handleSubmit}>
+                      <p style={{margin: '0', padding: '0', fontSize: '1.5em'}}>Sign Up</p>
+                  </Button>
+                </Link>
+              </FormGroup>
+            </Form>
             <p style={{margin: '1em', textAlign: 'center'}}>Or</p>
             <Link to="/signin">
               <Button style={{width: '100%'}} bsStyle="default" >Sign in</Button>
@@ -73,25 +77,28 @@ class WelcomePage extends Component {
     return (
       <div>
         <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
-          <div style={{justifyContent: 'center'}}><p style={{fontSize: '1.5em', marginRight: '1em'}}>Welcome to React Redux Socket.io Chat</p>
-           <p>
-          This is an open source chat program.
-          </p>
+          <div style={{justifyContent: 'center'}}><p style={{fontSize: '1.5em', marginRight: '1em'}}>OCTOGON.IO</p>
+            <p>
+              This is an open source group music recording program.
+            </p>
           </div>
         </header>
         <main style={{display: 'flex', justifyContent: 'center'}}>
-
-          <form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
+          <Form style={{height: '20rem', display: 'flex', justifyContent: 'center'}}>
             <div style={{margin: 'auto', paddingRight: '0.2em', height: '3.5em'}}>
-              {/* <Input
-                style={{height: '2.7em', fontSize: '1.3em'}}
-                ref="usernameInput"
-                type="text"
-                name="username"
-                value={this.state.username}
-                placeholder="Enter username"
-                onChange={::this.handleChange}
-              /> */}
+              <FormGroup
+                controlId="formBasicTextMM4"
+              >
+                <FormControl
+                  style={{height: '2.7em', fontSize: '1.3em'}}
+                  ref="usernameInput"
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  placeholder="Enter username"
+                  onChange={::this.handleChange}
+                />
+              </FormGroup>
             </div>
             <section style={{margin: 'auto', width: '12em', height: '3.5em'}}>
               <Link to="/signup">
@@ -104,7 +111,7 @@ class WelcomePage extends Component {
                 </Button>
               </Link>
             </section>
-          </form>
+          </Form>
           <div style={{height: '3.5em', width: '12em', alignSelf: 'center', display: 'flex', marginLeft: '1em'}}>
             <p style={{marginRight: '1em', marginTop: '1em'}}> Or </p>
             <Link to="/signin">

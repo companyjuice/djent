@@ -114,4 +114,7 @@ export const trace = curry((tag, d) => {
 	return d
 })
 
-window.trace = trace
+// [MM] chat
+if (typeof(window) !== 'undefined') {
+	window.trace = trace
+}

@@ -1,6 +1,6 @@
 import { remove } from 'ramda'
 import initialState from './presets.initial-state'
-import { updatePresets } from 'utils/presets'
+import { updatePresets } from '../utils/presets'
 
 export default function presets(state = initialState, action) {
     const { type, payload: newPreset } = action

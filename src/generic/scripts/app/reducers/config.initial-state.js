@@ -1,7 +1,7 @@
 import { identity } from 'ramda'
 import { Maybe } from 'ramda-fantasy'
-import { ACTIVE_PRESET_ID } from 'constants/localStorage'
-import { safeGetLocalStorageIO } from 'modules/localStorageIO'
+import { ACTIVE_PRESET_ID } from '../constants/localStorage'
+import { safeGetLocalStorageIO } from '../modules/localStorageIO'
 
 const defaultActivePresetID = 'thall-chicken'
 

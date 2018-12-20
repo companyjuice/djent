@@ -59,7 +59,7 @@ class SignIn extends Component {
         <main style={{display: 'flex', justifyContent: 'center'}}>
           <Form onSubmit={::this.handleSubmit}>
             <FormGroup
-              controlId="formBasicText1"
+              controlId="formBasicTextMM1"
             >
               <FormControl
                 label="Username"

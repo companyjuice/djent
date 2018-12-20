@@ -1,8 +1,8 @@
 import { assoc, map } from 'ramda'
 import { Maybe, Future as Task } from 'ramda-fantasy'
-import { PRESETS } from 'constants/localStorage'
-import { safeGetLocalStorageIO } from 'modules/localStorageIO'
-import promiseToTask from 'modules/promiseToTask'
+import { PRESETS } from '../constants/localStorage'
+import { safeGetLocalStorageIO } from '../modules/localStorageIO'
+import promiseToTask from '../modules/promiseToTask'
 
 const initialPresets = [
     {
