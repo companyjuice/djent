@@ -6,9 +6,7 @@
     ],
     "presets": [
         "@babel/preset-env",
-        ["es2015", { "modules": "commonjs" }],
-        "react",
-        "stage-0"
+        "@babel/preset-react"
     ],
     "env": {
         "test": {
@@ -18,9 +16,8 @@
                 "dynamic-import-node"
             ],
             "presets": [
-                ["es2015"],
-                "react",
-                "stage-0"
+                "@babel/preset-env",
+                "@babel/preset-react"
             ],
         }
     }

@@ -1,13 +1,15 @@
 const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+//const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
 const nodeEnv = process.env.NODE_ENV || 'development'
 const isProduction = nodeEnv === 'production'
+const devMode = process.env.NODE_ENV !== 'production'
 
 const sourceDir = '/src'
 const buildDir = '/www'
@@ -16,10 +18,15 @@ const outputJSFile = '[name].[chunkhash].js'
 const outputJSFileDev = '[name].js'
 const outputCSSFile = 'app.[contenthash].css'
 const outputCSSFileDev = 'app.css'
-const externalCSS = new ExtractTextPlugin({
-  filename: isProduction ? outputCSSFile : outputCSSFileDev,
-  disable: false,
-  allChunks: true,
+// const externalCSS = new ExtractTextPlugin({
+//   filename: isProduction ? outputCSSFile : outputCSSFileDev,
+//   disable: false,
+//   allChunks: true,
+// })
+const externalCSS = new MiniCssExtractPlugin({
+    filename: isProduction ? outputCSSFile : outputCSSFileDev,
+    disable: false,
+    allChunks: true,
 })
 const cwd = process.cwd()
 
@@ -70,30 +77,12 @@ const config = (env) => {
         {
           test: /\.(sass|s?css)$/,
           exclude: /node_modules/,
-          use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    minimize: isProduction,
-                    debug: !isProduction,
-                  },
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    plugins: loader => [
-                      autoprefixer({
-                        browsers: ['last 2 versions', 'iOS 8'],
-                      }),
-                    ],
-                  },
-                },
-                {
-                  loader: 'sass-loader',
-                },
-              ],
-            })),
+          use: [
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+          ],
         },
         {
           test: /\.((?!scss|sass|js|json).)*$/,

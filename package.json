@@ -16,15 +16,18 @@
     "analyse": "node node_modules/webpack/bin/webpack.js --config=webpack.config.js --env.platform=generic --colors --json | node node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "chat": "node src/server/server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mini-css-extract-plugin": "^0.5.0"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
     "@material-ui/core": "^3.7.0",
     "audiobuffer-to-wav": "^1.0.0",
     "autoprefixer": "^7.1.6",
     "autoprefixer-core": "^6.0.1",
-    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^8.0.4",
     "babel-plugin-dynamic-import-node": "^1.1.0",
@@ -42,8 +45,8 @@
     "babelify": "^8.0.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.0",
-    "chai": "^4.1.2",
-    "chai-enzyme": "^0.8.0",
+    "chai": "^4.2.0",
+    "chai-enzyme": "^1.0.0-beta.1",
     "classnames": "^2.1.2",
     "clean-webpack-plugin": "^1.0.0",
     "clone-deep": "^1.0.0",
