@@ -2,7 +2,9 @@
     "plugins": [
         "react-hot-loader/babel",
         "ramda",
-        "transform-class-properties"
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-transform-runtime"
     ],
     "presets": [
         "@babel/preset-env",
@@ -12,8 +14,9 @@
         "test": {
             "plugins": [
                 "react-hot-loader/babel",
-                "transform-class-properties",
-                "dynamic-import-node"
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-syntax-dynamic-import",
+                "@babel/plugin-transform-runtime"
             ],
             "presets": [
                 "@babel/preset-env",
