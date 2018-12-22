@@ -92,6 +92,15 @@ const config = (env) => {
             minimize: true,
           },
         },
+        {
+          test: /\.html$/,
+          use: [
+            {
+              loader: "html-loader",
+              options: { minimize: true }
+            }
+          ]
+        },
       ],
     },
     devServer: {
