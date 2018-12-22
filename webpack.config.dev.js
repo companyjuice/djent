@@ -6,7 +6,7 @@ module.exports = {
   mode: nodeEnv,
   devtool: 'inline-source-map',
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     'webpack-hot-middleware/client',
     './src/client/index'
   ],
@@ -29,22 +29,22 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
-          plugins: [
-            [
-              'react-transform', {
-                transforms: [{
-                  transform: 'react-transform-hmr',
-                  imports: ['react'],
-                  locals: ['module']
-                }, {
-                  transform: 'react-transform-catch-errors',
-                  imports: ['react', 'redbox-react']
-                }]
-              }
-            ]
-          ]
-        },
+        // query: {
+        //   plugins: [
+        //     [
+        //       'react-transform', {
+        //         transforms: [{
+        //           transform: 'react-transform-hmr',
+        //           imports: ['react'],
+        //           locals: ['module']
+        //         }, {
+        //           transform: 'react-transform-catch-errors',
+        //           imports: ['react', 'redbox-react']
+        //         }]
+        //       }
+        //     ]
+        //   ]
+        // },
         include: [path.resolve(__dirname, 'src')]
       },
       {

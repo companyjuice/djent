@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import moment from 'moment';
-import { Input } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap' // Input
 import uuid from 'node-uuid';
 
 export default class MessageComposer extends Component {
@@ -60,7 +60,7 @@ export default class MessageComposer extends Component {
         order: '2',
         marginTop: '0.5em'
       }}>
-        <Input
+        <FormControl
           style={{
             height: '100%',
             fontSize: '2em',

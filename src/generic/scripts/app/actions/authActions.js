@@ -109,7 +109,7 @@ export function signIn(user) {
       })
       .then(response => {
         if(response.ok) {
-          Cookies.save('username', user.username)
+          //Cookies.save('username', user.username)
           dispatch(receiveSignIn(user.username));
           browserHistory.push('/chat');
         }

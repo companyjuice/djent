@@ -79,9 +79,26 @@ const config = (env) => {
           exclude: /node_modules/,
           use: [
             devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'css-loader',
-            'postcss-loader',
-            'sass-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: isProduction,
+                debug: !isProduction,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: loader => [
+                  autoprefixer({
+                    browsers: ['last 2 versions', 'iOS 8'],
+                  }),
+                ],
+              },
+            },
+            {
+              loader: 'sass-loader',
+            },
           ],
         },
         {

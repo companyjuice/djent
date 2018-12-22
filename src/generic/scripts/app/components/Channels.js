@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ChannelListItem from './ChannelListItem'
 import ChannelListModalItem from './ChannelListModalItem'
-import { Modal, Glyphicon, Input, Button } from 'react-bootstrap'
+import { Modal, Glyphicon, Button, Form, FormGroup, FormControl } from 'react-bootstrap' // Input
 import * as actions from '../actions/actions'
 import uuid from 'node-uuid'
 
@@ -97,8 +97,8 @@ export default class Channels extends Component {
             <Modal.Title>Add New Channel</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={::this.handleModalSubmit} >
-            <Input
+            <Form onSubmit={::this.handleModalSubmit} >
+            <FormControl
               ref="channelName"
               type="text"
               help={this.validateChannelName() === 'error' && 'A channel with that name already exists!'}
@@ -110,7 +110,7 @@ export default class Channels extends Component {
               value={this.state.channelName}
               onChange={::this.handleModalChange}
             />
-            </form>
+            </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={::this.closeAddChannelModal}>Cancel</Button>

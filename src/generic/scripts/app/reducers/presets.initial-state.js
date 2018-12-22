@@ -10,7 +10,7 @@ const initialPresets = [
         description: 'Meshuggah',
         group: 'Artists',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.meshuggah" */ 'utils/presets/meshuggah')
+            import(/* webpackChunkName: "presets.meshuggah" */ '../utils/presets/meshuggah')
         )
     },
     {
@@ -18,7 +18,7 @@ const initialPresets = [
         description: 'Sworn In',
         group: 'Artists',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.sworn-in" */ 'utils/presets/sworn-in')
+            import(/* webpackChunkName: "presets.sworn-in" */ '../utils/presets/sworn-in')
         )
     },
     {
@@ -26,7 +26,7 @@ const initialPresets = [
         description: 'Scratchy heavy',
         group: 'Djent',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.thall-buster" */ 'utils/presets/thall-buster')
+            import(/* webpackChunkName: "presets.thall-buster" */ '../utils/presets/thall-buster')
         )
     },
     {
@@ -34,7 +34,7 @@ const initialPresets = [
         description: 'Scratchy groovy',
         group: 'Djent',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.thall-chicken" */ 'utils/presets/thall-chicken')
+            import(/* webpackChunkName: "presets.thall-chicken" */ '../utils/presets/thall-chicken')
         )
     },
     {
@@ -42,7 +42,7 @@ const initialPresets = [
         description: 'Thall',
         group: 'Djent',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.thall" */ 'utils/presets/thall')
+            import(/* webpackChunkName: "presets.thall" */ '../utils/presets/thall')
         )
     },
     {
@@ -50,7 +50,7 @@ const initialPresets = [
         description: 'Thall (triplets)',
         group: 'Djent',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.thall-triplets" */ 'utils/presets/thall-triplets')
+            import(/* webpackChunkName: "presets.thall-triplets" */ '../utils/presets/thall-triplets')
         )
     },
     {
@@ -58,7 +58,7 @@ const initialPresets = [
         description: 'Blast Beats',
         group: 'Heavy',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.black-dahlia" */ 'utils/presets/black-dahlia')
+            import(/* webpackChunkName: "presets.black-dahlia" */ '../utils/presets/black-dahlia')
         )
     },
     {
@@ -66,7 +66,7 @@ const initialPresets = [
         description: 'Doom',
         group: 'Heavy',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.doom" */ 'utils/presets/doom')
+            import(/* webpackChunkName: "presets.doom" */ '../utils/presets/doom')
         )
     },
     {
@@ -74,7 +74,7 @@ const initialPresets = [
         description: 'Breakdown',
         group: 'Pop Punk',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.adtr-breakdown" */ 'utils/presets/adtr-breakdown')
+            import(/* webpackChunkName: "presets.adtr-breakdown" */ '../utils/presets/adtr-breakdown')
         )
     },
     {
@@ -82,7 +82,7 @@ const initialPresets = [
         description: 'Chorus',
         group: 'Pop Punk',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.pop-punk-chorus" */ 'utils/presets/pop-punk-chorus')
+            import(/* webpackChunkName: "presets.pop-punk-chorus" */ '../utils/presets/pop-punk-chorus')
         )
     },
     {
@@ -90,7 +90,7 @@ const initialPresets = [
         description: 'Poly Chords & Melody',
         group: 'Progressive',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.contortionist" */ 'utils/presets/contortionist')
+            import(/* webpackChunkName: "presets.contortionist" */ '../utils/presets/contortionist')
         )
     },
     {
@@ -98,7 +98,7 @@ const initialPresets = [
         description: 'Polyrhythms',
         group: 'Progressive',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.polyrhythms" */ 'utils/presets/polyrhythms')
+            import(/* webpackChunkName: "presets.polyrhythms" */ '../utils/presets/polyrhythms')
         )
     },
     {
@@ -106,7 +106,7 @@ const initialPresets = [
         description: 'High Tremolo',
         group: 'Rock',
         load: promiseToTask(() =>
-            import(/* webpackChunkName: "presets.high-tremolo" */ 'utils/presets/high-tremolo')
+            import(/* webpackChunkName: "presets.high-tremolo" */ '../utils/presets/high-tremolo')
         )
     },
 ]
