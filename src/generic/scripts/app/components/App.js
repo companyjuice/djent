@@ -5,7 +5,7 @@ import routes from 'routes'
 // [MM] chat
 import DevTools from 'containers/DevTools'
 // [MM] polling
-var ioClient = require('socket.io-client')
+import ioClient from 'socket.io-client'
 
 class App extends Component {
 
