@@ -79,7 +79,7 @@ class WelcomePage extends Component {
         <header style={{display: 'flex', justifyContent: 'center', flexGrow: '0', order: '0'}}>
           <div style={{justifyContent: 'center'}}><p style={{fontSize: '1.5em', marginRight: '1em'}}>OCTOGON.IO</p>
             <p>
-              This is an open source group music recording program.
+              WELCOME -||- This is an open source group music recording program.
             </p>
           </div>
         </header>

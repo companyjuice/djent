@@ -9,7 +9,7 @@ class SignUp extends Component {
 
   static propTypes = {
     welcomePage: PropTypes.string.isRequired,
-    //userValidation: PropTypes.array.isrequired,
+    userValidation: PropTypes.array.isrequired,
     dispatch: PropTypes.func.isRequired
   };
   constructor(props, context) {

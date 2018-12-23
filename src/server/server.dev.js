@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-import express from 'express';
-import path from 'path';
+import express from 'express'
+import path from 'path'
 
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
@@ -25,6 +25,8 @@ require('../../config/passport')(passport)
 import SocketIo from 'socket.io'
 
 const app = express()
+// [MM] polling
+const app1 = express()
 
 //set env vars
 process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev'
@@ -40,10 +42,10 @@ console.log(
 )
 
 process.on('uncaughtException', function (err) {
-  console.log(err);
-});
-app.use(cors());
-app.use(passport.initialize());
+  console.log(err)
+})
+app.use(cors())
+app.use(passport.initialize())
 
 console.log(
   `
@@ -58,8 +60,21 @@ console.log(
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath
-}));
-app.use(require('webpack-hot-middleware')(compiler));
+}))
+app.use(require('webpack-hot-middleware')(compiler))
+
+
+// [MM] polling
+app1.use(express.static('./www'))
+app1.use(express.static('./node_modules/bootstrap/dist'))
+var server1 = app1.listen(3003)
+var ioServer = require('socket.io').listen(server1)
+
+ioServer.sockets.on('connection', function(socket) {
+  console.log("ioServer connected: %s", socket.id)
+})
+
+console.log("Polling server is running at 'http://localhost:3003'")
 
 
 // load routers

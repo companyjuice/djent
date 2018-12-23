@@ -27,7 +27,7 @@ const requireAuth = (nextState, replace) => {
 
 export default (
     <Route path="/" component={Main}>
-        <IndexRoute component={WelcomePage} />
+        <Route path="/welcome" component={WelcomePage} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
 
