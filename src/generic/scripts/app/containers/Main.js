@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 
 import Main from '../routes/Main'
 
-// [MM] chat
-//import PropTypes from 'prop-types'
-
 import { applyPreset } from '../actions/config'
 import { disableModal, enableModal } from '../actions/modal'
 import { updateAudioPlaylist } from '../actions/sound'

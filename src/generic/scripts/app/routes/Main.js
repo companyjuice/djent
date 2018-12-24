@@ -15,10 +15,6 @@ import Player from '../containers/Player'
 //import NavBar from '../components/NavBar'
 //import CourseList from '../components/CourseList'
 
-// [MM] chat
-//import PropTypes from 'prop-types'
-
-
 import { defaultAllowedLengths } from '../reducers/sequences.initial-state'
 
 import { backwardsCompatibility } from '../utils/presets'
@@ -42,12 +38,18 @@ export default class Main extends Component {
         childrenLoaded: false,
     }
 
+    // [MM] ???
+    constructor(props, context) {
+        super(props, context)
+
+        this.componentWillMount = this.componentWillMount.bind(this)
+    }
 
     componentWillMount = () => {
         this.setupBackButtonController()
         const { params, presets } = this.props
-        const shareID = params.shareID
-
+        //const shareID = params.shareID
+        const shareID = ""
 
         handleGoogleAPI()
             .fork(logError, () => {
@@ -56,7 +58,8 @@ export default class Main extends Component {
             })
 
         if (!shareID) {
-            const presetID = this.props.params.presetID || this.props.activePresetID
+            //const presetID = this.props.params.presetID || this.props.activePresetID
+            const presetID = ""
             const preset = presets.find(p => p.id === presetID)
                         || presets.find(p => p.id === this.props.activePresetID)
                         || presets[0]
@@ -93,9 +96,10 @@ export default class Main extends Component {
     }
 
     componentWillUpdate = (nextProps) => {
-        if (!this.props.params.shareID && nextProps.params.shareID) {
-            this.setupSharedItemsAndUpdate(nextProps.params.shareID)
-        }
+        // if (!this.props.params.shareID && nextProps.params.shareID) {
+        //     this.setupSharedItemsAndUpdate(nextProps.params.shareID)
+        // }
+        console.log(nextProps)
     }
 
     componentWillUnmount = () => {
