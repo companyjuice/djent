@@ -39,17 +39,23 @@ export default class Main extends Component {
     }
 
     // [MM] ???
-    constructor(props, context) {
-        super(props, context)
+    // constructor(props, context) {
+    //     super(props, context)
 
-        this.componentWillMount = this.componentWillMount.bind(this)
-    }
+    //     this.componentWillMount = this.componentWillMount.bind(this)
+    // }
 
     componentWillMount = () => {
         this.setupBackButtonController()
         const { params, presets } = this.props
+        // [MM] not accepting shareID right now
         //const shareID = params.shareID
-        const shareID = ""
+        //const shareID = ""
+        const shareID = this.props.shareID
+        console.log("== [MM] this.props ==")
+        console.log(this.props)
+        console.log("== [MM] end ==")
+
 
         handleGoogleAPI()
             .fork(logError, () => {
@@ -58,8 +64,10 @@ export default class Main extends Component {
             })
 
         if (!shareID) {
+            // [MM] not accepting presetID right now
             //const presetID = this.props.params.presetID || this.props.activePresetID
-            const presetID = ""
+            //const presetID = ""
+            const presetID = this.props.activePresetID
             const preset = presets.find(p => p.id === presetID)
                         || presets.find(p => p.id === this.props.activePresetID)
                         || presets[0]
@@ -103,6 +111,7 @@ export default class Main extends Component {
     }
 
     componentWillUnmount = () => {
+        // [MM] causing an issue? Can't perform a React state update on an unmounted component
         window.removeEventListener('popstate', this.backToHome)
     }
 

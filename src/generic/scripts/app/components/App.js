@@ -9,6 +9,10 @@ import DevTools from '../containers/DevTools'
 // [MM] polling
 import ioClient from 'socket.io-client'
 import Header from './Header'
+// [MM] polling
+import Audience from './Audience'
+import Speaker from './Speaker'
+import Board from './Board'
 
 class App extends Component {
 
@@ -17,7 +21,9 @@ class App extends Component {
         
         this.state = {
             status: 'disconnected',
-            title: ''
+            title: '',
+            shareID: '',
+            presetID: 'meshuggah'
         }
 
         this.connect = this.connect.bind(this)
@@ -67,7 +73,10 @@ class App extends Component {
                     <Switch>
                         {/* <Route exact path="/" component={Main} /> */}
                         <Route exact path="/" render={(props) => (
-                            <Main shareID="12345" presetID="12345" props={props} />
+                            <div>
+                                <Audience />
+                                <Main {...this.state} />
+                            </div>
                         )} />
                         <Redirect from='/**/share/:shareID' to='share/:shareID' />
                         <Route path="share/:shareID" id="share" />
@@ -75,6 +84,10 @@ class App extends Component {
                         <Route path="sequences" id="sequences" />
                         <Route path="instruments" id="instruments" />
                         <Route status={404} path="*" />
+
+                        <Route exact path="/" component={Audience} />
+                        <Route name="speaker" path="/speaker" component={Speaker} {...this.state} />
+                        <Route name="board" path="/board" handler={Board} {...this.state} />
                     </Switch>
                 </Router>
 

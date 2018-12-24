@@ -71,6 +71,13 @@ var title = 'Untitled Room'
 
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
+app1.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../www/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 var server1 = app1.listen(3003)
 var ioServer = require('socket.io').listen(server1)
 
