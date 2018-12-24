@@ -88,6 +88,15 @@ ioServer.sockets.on('connection', function(socket) {
     socket.disconnect()
     console.log("ioServer socket disconnected: %s sockets remaining", connections.length)
   })
+  
+  socket.on('join', function(payload) {
+    var newMember = {
+      id: this.id,
+      name: payload.name
+    }
+    this.emit('joined', newMember)
+    console.log("ioServer socket audience joined: %s", payload.name)
+  })
 
   socket.emit('welcome', {
     title: title

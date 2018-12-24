@@ -23,16 +23,19 @@ class App extends Component {
             status: 'disconnected',
             title: '',
             shareID: '',
-            presetID: 'meshuggah'
+            presetID: 'meshuggah',
+            member: {}
         }
 
         this.connect = this.connect.bind(this)
         this.disconnect = this.disconnect.bind(this)
         this.welcome = this.welcome.bind(this)
+        this.emit = this.emit.bind(this)
+        this.joined = this.joined.bind(this)
 
-        console.log("===")
-        //console.log(routes)
-        console.log("===")
+        console.log("== [MM] App Component constructor loaded: this.state ==")
+        console.log(this.state)
+        console.log("== [MM] end ==")
     }
 
     componentWillMount() {
@@ -41,8 +44,9 @@ class App extends Component {
         this.socket.on('connect', this.connect)
         this.socket.on('disconnect', this.disconnect)
         this.socket.on('welcome', this.welcome)
+        this.socket.on('joined', this.joined)
     }
-
+    
     connect() {
         console.log("ioClient connected: " + this.socket.id)
         //alert("ioClient connected: " + this.socket.id)
@@ -61,6 +65,18 @@ class App extends Component {
         this.setState({ title: serverState.title })
     }
 
+    emit(eventName, payload) {
+        this.socket.emit(eventName, payload)
+    }
+
+    joined(member) {
+        this.setState({ member: member })
+        console.log("== [MM] Member Joined ==")
+        console.log(member)
+        console.log(this.state)
+        console.log("== [MM] end ==")
+    }
+
     render = () => (
         <Provider store={this.props.store}>
             <div style={{height: '100%'}}>
@@ -74,7 +90,7 @@ class App extends Component {
                         {/* <Route exact path="/" component={Main} /> */}
                         <Route exact path="/" render={(props) => (
                             <div>
-                                <Audience {...this.state} />
+                                <Audience {...this.state} emit={this.emit} />
                                 <Main {...this.state} />
                             </div>
                         )} />
@@ -85,7 +101,7 @@ class App extends Component {
                         <Route path="instruments" id="instruments" />
                         <Route status={404} path="*" />
 
-                        <Route exact path="/" component={Audience} />
+                        {/* <Route exact path="/" component={Audience} /> */}
                         <Route name="speaker" path="/speaker" component={Speaker} {...this.state} />
                         <Route name="board" path="/board" handler={Board} {...this.state} />
                     </Switch>
