@@ -68,6 +68,7 @@ console.log(
 // [MM] polling
 var connections = []
 var title = 'Untitled Room'
+var audience = []
 
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
@@ -95,6 +96,10 @@ ioServer.sockets.on('connection', function(socket) {
       name: payload.name
     }
     this.emit('joined', newMember)
+    // add new member to the audience array
+    audience.push(newMember)
+    // broadcast to all sockets the new audience array
+    ioServer.sockets.emit('audience', audience)
     console.log("ioServer socket audience joined: %s", payload.name)
   })
 

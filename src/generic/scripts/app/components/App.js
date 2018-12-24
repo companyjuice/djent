@@ -24,7 +24,8 @@ class App extends Component {
             title: '',
             shareID: '',
             presetID: 'meshuggah',
-            member: {}
+            member: {},
+            audience: []
         }
 
         this.connect = this.connect.bind(this)
@@ -32,6 +33,7 @@ class App extends Component {
         this.welcome = this.welcome.bind(this)
         this.emit = this.emit.bind(this)
         this.joined = this.joined.bind(this)
+        this.updateAudience = this.updateAudience.bind(this)
 
         console.log("== [MM] App Component constructor loaded: this.state ==")
         console.log(this.state)
@@ -45,6 +47,7 @@ class App extends Component {
         this.socket.on('disconnect', this.disconnect)
         this.socket.on('welcome', this.welcome)
         this.socket.on('joined', this.joined)
+        this.socket.on('audience', this.updateAudience)
     }
     
     connect() {
@@ -75,6 +78,10 @@ class App extends Component {
         console.log(member)
         console.log(this.state)
         console.log("== [MM] end ==")
+    }
+
+    updateAudience(newAudience) {
+        this.setState({ audience: newAudience })
     }
 
     render = () => (
