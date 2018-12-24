@@ -6,7 +6,7 @@ class Audience extends Component {
     render() {
         return(
             <h1>
-                Audience
+                Audience : {this.props.title}
             </h1>
         )
     }

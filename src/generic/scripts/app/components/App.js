@@ -74,7 +74,7 @@ class App extends Component {
                         {/* <Route exact path="/" component={Main} /> */}
                         <Route exact path="/" render={(props) => (
                             <div>
-                                <Audience />
+                                <Audience {...this.state} />
                                 <Main {...this.state} />
                             </div>
                         )} />
