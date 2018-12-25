@@ -2,6 +2,7 @@
 
 import express from 'express'
 import path from 'path'
+import _ from 'underscore'
 
 import mongoose from 'mongoose'
 
@@ -69,6 +70,7 @@ console.log(
 var connections = []
 var title = 'Untitled Room'
 var audience = []
+var speaker = {}
 
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
@@ -82,18 +84,39 @@ app1.get('/*', function(req, res) {
 var server1 = app1.listen(3003)
 var ioServer = require('socket.io').listen(server1)
 
+// of a connection on socket.io
 ioServer.sockets.on('connection', function(socket) {
   
+  // when a member leaves
   socket.once('disconnect', function() {
+
+    // find and remove member from audience array
+    var member = _.findWhere(audience, { 
+      id: this.id
+    })
+    if (member) {
+      audience.splice(audience.indexOf(member), 1)
+      // broadcast new audience array
+      ioServer.sockets.emit('audience', audience)
+      console.log("ioServer audience disconnected: %s (%s remaining)", member.name, audience.length)
+    } else if (this.id === speaker.id) {
+      console.log("ioServer speaker has left: %s. Room '%s' is over.", speaker.name, title)
+      speaker = {}
+      title = "Another Untitled Room"
+      ioServer.sockets.emit('end', { title: title, speaker: {} })
+    }
+
     connections.splice(connections.indexOf(socket), 1)
     socket.disconnect()
     console.log("ioServer socket disconnected: %s sockets remaining", connections.length)
   })
   
+  // when a member joins
   socket.on('join', function(payload) {
     var newMember = {
       id: this.id,
-      name: payload.name
+      name: payload.name,
+      type: 'member'
     }
     this.emit('joined', newMember)
     // add new member to the audience array
@@ -103,8 +126,22 @@ ioServer.sockets.on('connection', function(socket) {
     console.log("ioServer socket audience joined: %s", payload.name)
   })
 
+  // when a speak joins
+  socket.on('start', function(payload) {
+    speaker.id = this.id
+    speaker.name = payload.name
+    speaker.type = 'speaker'
+    this.emit('joined', speaker)
+    // broadcast to all sockets the speaker name and room title
+    ioServer.sockets.emit('start', { title: title, speaker: speaker })
+    console.log("ioServer presentation started: '%s' by %s", title, speaker.name)
+  })
+
+  // emit a function with data
   socket.emit('welcome', {
-    title: title
+    title: title,
+    audience: audience,
+    speaker: speaker
   })
 
   connections.push(socket)

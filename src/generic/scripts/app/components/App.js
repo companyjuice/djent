@@ -25,12 +25,14 @@ class App extends Component {
             shareID: '',
             presetID: 'meshuggah',
             member: {},
-            audience: []
+            audience: [],
+            speaker: {}
+            //speaker: ''
         }
 
         this.connect = this.connect.bind(this)
         this.disconnect = this.disconnect.bind(this)
-        this.welcome = this.welcome.bind(this)
+        this.updateState = this.updateState.bind(this)
         this.emit = this.emit.bind(this)
         this.joined = this.joined.bind(this)
         this.updateAudience = this.updateAudience.bind(this)
@@ -45,27 +47,38 @@ class App extends Component {
         console.log(this.socket)
         this.socket.on('connect', this.connect)
         this.socket.on('disconnect', this.disconnect)
-        this.socket.on('welcome', this.welcome)
+        this.socket.on('welcome', this.updateState)
         this.socket.on('joined', this.joined)
         this.socket.on('audience', this.updateAudience)
+        this.socket.on('start', this.updateState)
     }
     
     connect() {
+        
         console.log("ioClient connected: " + this.socket.id)
-        //alert("ioClient connected: " + this.socket.id)
+
+        // check session storage for a previously joined member
+        var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null
+        if (member) {
+            this.emit('join', member)
+        }
+        
+        // update state
         this.setState({ status: 'connected' })
     }
 
     disconnect() {
         console.log("ioClient disconnected: " + this.socket.id)
-        //alert("ioClient disconnect: " + this.socket.id)
+
         this.setState({ status: 'disconnected' })
     }
 
-    welcome(serverState) {
-        //console.log("ioClient disconnected: " + this.socket.id)
-        //alert("ioClient disconnect: " + this.socket.id)
-        this.setState({ title: serverState.title })
+    //welcome(serverState) {
+    updateState(serverState) {
+        console.log("ioClient updateState: " + this.socket.id)
+
+        //this.setState({ title: serverState.title })
+        this.setState(serverState)
     }
 
     emit(eventName, payload) {
@@ -73,6 +86,9 @@ class App extends Component {
     }
 
     joined(member) {
+
+        sessionStorage.member = JSON.stringify(member)
+
         this.setState({ member: member })
         console.log("== [MM] Member Joined ==")
         console.log(member)
@@ -89,7 +105,8 @@ class App extends Component {
             <div style={{height: '100%'}}>
                 
                 {/* <h1 style={{textAlign: 'center'}}>HEY HEY HEY from React -- Live Polling</h1> */}
-                <Header title={this.state.title} status={this.state.status} />
+                {/* <Header title={this.state.title} status={this.state.status} /> */}
+                <Header {...this.state} />
                 
                 {/* <Router key={Math.random()} history={this.props.history} routes={routes} /> */}
                 <Router key={Math.random()}>
@@ -106,11 +123,23 @@ class App extends Component {
                         <Route path="preset/:presetID" id="preset" />
                         <Route path="sequences" id="sequences" />
                         <Route path="instruments" id="instruments" />
-                        <Route status={404} path="*" />
+                        {/* <Route status={404} path="*" /> */}
 
                         {/* <Route exact path="/" component={Audience} /> */}
-                        <Route name="speaker" path="/speaker" component={Speaker} {...this.state} />
-                        <Route name="board" path="/board" handler={Board} {...this.state} />
+                        {/* <Route name="speaker" path="/speaker" component={Speaker} {...this.state} /> */}
+                        <Route exact path="/speaker" render={(props) => (
+                            <div>
+                                <Speaker {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
+                        {/* <Route name="board" path="/board" handler={Board} {...this.state} /> */}
+                        <Route exact path="/board" render={(props) => (
+                            <div>
+                                <Board {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
                     </Switch>
                 </Router>
 

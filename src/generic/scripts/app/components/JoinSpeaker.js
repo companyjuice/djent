@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
 
-class Join extends Component {
+class JoinSpeaker extends Component {
 
     constructor(props) {
         super(props)
@@ -18,35 +17,41 @@ class Join extends Component {
         // this.connect = this.connect.bind(this)
         // this.disconnect = this.disconnect.bind(this)
         // this.welcome = this.welcome.bind(this)
-        this.join = this.join.bind(this)
+        this.start = this.start.bind(this)
 
-        console.log("== [MM] Join Component constructor loaded: this.join ==")
-        console.log(this.join)
+        console.log("== [MM] JoinSpeaker Component constructor loaded: this.start ==")
+        console.log(this.start)
         console.log("== [MM] end ==")
     }
 
-    join() {
-        var memberName = ReactDOM.findDOMNode(this.refs.name).value
-        this.props.emit('join', { name: memberName })
-        console.log("== [MM] join: this.props ==")
+    start() {
+        var speakerName = ReactDOM.findDOMNode(this.refs.name).value
+        var title = ReactDOM.findDOMNode(this.refs.title).value
+        this.props.emit('start', { name: speakerName, title: title })
+        console.log("== [MM] start: this.props ==")
         console.log(this.props)
         console.log("== [MM] end ==")
     }
 
     render() {
         return(
-            <form action="javascript:void(0)" onSubmit={this.join}>
+            <form action="javascript:void(0)" onSubmit={this.start}>
 
                 <label>Full Name</label>
                 <input ref="name"
                     className="form-control"
                     placeholder="enter your full name.."
                     required />
+                <label>Room Title</label>
+                <input ref="title"
+                    className="form-control"
+                    placeholder="enter a room name.."
+                    required />
                 <button className="btn btn-primary">Join</button>
-                <Link to="/speaker">Start a presentation room</Link>
+
             </form>
         )
     }
 }
 
-export default Join
+export default JoinSpeaker
