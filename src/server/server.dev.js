@@ -94,19 +94,25 @@ ioServer.sockets.on('connection', function(socket) {
     var member = _.findWhere(audience, { 
       id: this.id
     })
+    // handle leaving member
     if (member) {
       audience.splice(audience.indexOf(member), 1)
       // broadcast new audience array
       ioServer.sockets.emit('audience', audience)
       console.log("ioServer audience disconnected: %s (%s remaining)", member.name, audience.length)
-    } else if (this.id === speaker.id) {
+    } 
+    // handle leaving speaker
+    else if (this.id === speaker.id) {
       console.log("ioServer speaker has left: %s. Room '%s' is over.", speaker.name, title)
       speaker = {}
       title = "Another Untitled Room"
       ioServer.sockets.emit('end', { title: title, speaker: {} })
     }
 
+    // remove socket from our connections array
     connections.splice(connections.indexOf(socket), 1)
+
+    // finally, disconnect from socket io
     socket.disconnect()
     console.log("ioServer socket disconnected: %s sockets remaining", connections.length)
   })
@@ -126,15 +132,16 @@ ioServer.sockets.on('connection', function(socket) {
     console.log("ioServer socket audience joined: %s", payload.name)
   })
 
-  // when a speak joins
+  // when a speaker (member.type) joins
   socket.on('start', function(payload) {
     speaker.id = this.id
     speaker.name = payload.name
     speaker.type = 'speaker'
+    title = payload.title
     this.emit('joined', speaker)
-    // broadcast to all sockets the speaker name and room title
+    // broadcast to all sockets the speaker object and room title
     ioServer.sockets.emit('start', { title: title, speaker: speaker })
-    console.log("ioServer presentation started: '%s' by %s", title, speaker.name)
+    console.log("ioServer room started: '%s' by %s", title, speaker.name)
   })
 
   // emit a function with data

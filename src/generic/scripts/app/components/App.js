@@ -59,8 +59,11 @@ class App extends Component {
 
         // check session storage for a previously joined member
         var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null
-        if (member) {
+        if (member && member.type === 'audience') {
+            // (re)join the member
             this.emit('join', member)
+        } else if (member && member.type === 'speaker') {
+            this.emit('start', { name: member.name, title: sessionStorage.title })
         }
         
         // update state
@@ -70,19 +73,11 @@ class App extends Component {
     disconnect() {
         console.log("ioClient disconnected: " + this.socket.id)
 
-        this.setState({ status: 'disconnected' })
-    }
-
-    //welcome(serverState) {
-    updateState(serverState) {
-        console.log("ioClient updateState: " + this.socket.id)
-
-        //this.setState({ title: serverState.title })
-        this.setState(serverState)
-    }
-
-    emit(eventName, payload) {
-        this.socket.emit(eventName, payload)
+        this.setState({ 
+            status: 'disconnected',
+            title: 'Room Disconnected',
+            speaker: ''
+        })
     }
 
     joined(member) {
@@ -98,6 +93,25 @@ class App extends Component {
 
     updateAudience(newAudience) {
         this.setState({ audience: newAudience })
+    }
+
+    start(room) {
+        if (this.state.member.type === 'speaker') {
+            sessionStorage.title = room.title
+        }
+        this.setState(room)
+    }
+
+    //welcome(serverState) {
+    updateState(serverState) {
+        console.log("ioClient updateState: " + this.socket.id)
+
+        //this.setState({ title: serverState.title })
+        this.setState(serverState)
+    }
+
+    emit(eventName, payload) {
+        this.socket.emit(eventName, payload)
     }
 
     render = () => (
