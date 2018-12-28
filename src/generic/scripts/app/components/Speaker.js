@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Display from './Display'
 import JoinSpeaker from './JoinSpeaker'
 import Attendance from './Attendance'
+import Questions from './Questions'
 
 class Speaker extends Component {
 
@@ -19,7 +20,7 @@ class Speaker extends Component {
                     </Display>
 
                     <Display if={this.props.member.name && this.props.member.type === 'speaker'}>
-                        <p>Questions</p>
+                        <Questions questions={this.props.questions} emit={this.props.emit} />
                         <Attendance audience={this.props.audience} />
                     </Display>
 

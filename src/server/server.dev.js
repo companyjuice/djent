@@ -5,6 +5,7 @@ import path from 'path'
 import _ from 'underscore'
 
 import mongoose from 'mongoose'
+import { utils } from 'mocha';
 
 // import { renderToString } from 'react-dom/server'
 // import { Provider } from 'react-redux'
@@ -71,6 +72,8 @@ var connections = []
 var title = 'Untitled Room'
 var audience = []
 var speaker = {}
+var questions = require('../generic/scripts/app/utils/questions')
+var currentQuestion = false
 
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
@@ -144,11 +147,20 @@ ioServer.sockets.on('connection', function(socket) {
     console.log("ioServer room started: '%s' by %s", title, speaker.name)
   })
 
+	socket.on('ask', function(question) {
+		currentQuestion = question;
+		//results = {a:0, b:0, c:0, d:0};
+		ioServer.sockets.emit('ask', currentQuestion);
+		console.log("ioServer question asked: '%s'", question.q);
+	});
+
   // emit a function with data
   socket.emit('welcome', {
     title: title,
     audience: audience,
-    speaker: speaker
+    speaker: speaker,
+    questions: questions,
+    currentQuestion: currentQuestion
   })
 
   connections.push(socket)

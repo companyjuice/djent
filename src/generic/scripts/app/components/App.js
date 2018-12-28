@@ -26,8 +26,10 @@ class App extends Component {
             presetID: 'meshuggah',
             member: {},
             audience: [],
-            speaker: {}
-            //speaker: ''
+            speaker: {},
+            //speaker: '',
+            questions: [],
+            currentQuestion: false
         }
 
         this.connect = this.connect.bind(this)
@@ -36,6 +38,7 @@ class App extends Component {
         this.emit = this.emit.bind(this)
         this.joined = this.joined.bind(this)
         this.updateAudience = this.updateAudience.bind(this)
+        this.ask = this.ask.bind(this)
 
         console.log("== [MM] App Component constructor loaded: this.state ==")
         console.log(this.state)
@@ -51,6 +54,7 @@ class App extends Component {
         this.socket.on('joined', this.joined)
         this.socket.on('audience', this.updateAudience)
         this.socket.on('start', this.updateState)
+        this.socket.on('ask', this.ask)
     }
     
     connect() {
@@ -100,6 +104,10 @@ class App extends Component {
             sessionStorage.title = room.title
         }
         this.setState(room)
+    }
+
+    ask(question) {
+        this.setState({ currentQuestion: question })
     }
 
     //welcome(serverState) {
