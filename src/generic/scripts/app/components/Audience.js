@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
 import Display from './Display'
 import Join from './Join'
+import Ask from './Ask'
 
 class Audience extends Component {
 
@@ -21,11 +22,12 @@ class Audience extends Component {
                         <Display if={!this.props.currentQuestion}>
                             <h3>Questions will appear here.</h3>
                         </Display>
+
                         <Display if={this.props.currentQuestion}>
-                            <h3>{this.props.currentQuestion.q}</h3>
+                            {/* <h3>{this.props.currentQuestion.q}</h3> */}
+                            <Ask question={this.props.currentQuestion} emit={this.props.emit} />
                         </Display>
-                        
-                        
+
                     </Display>
 
                     <Display if={!this.props.member.name}>

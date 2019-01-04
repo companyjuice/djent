@@ -29,7 +29,8 @@ class App extends Component {
             speaker: {},
             //speaker: '',
             questions: [],
-            currentQuestion: false
+            currentQuestion: false,
+            results: {}
         }
 
         this.connect = this.connect.bind(this)
@@ -55,10 +56,10 @@ class App extends Component {
         this.socket.on('audience', this.updateAudience)
         this.socket.on('start', this.updateState)
         this.socket.on('ask', this.ask)
+        this.socket.on('results', this.updateResults)
     }
     
     connect() {
-        
         console.log("ioClient connected: " + this.socket.id)
 
         // check session storage for a previously joined member
@@ -107,7 +108,15 @@ class App extends Component {
     }
 
     ask(question) {
-        this.setState({ currentQuestion: question })
+        sessionStorage.answer = ''
+        this.setState({ 
+            currentQuestion: question,
+            results: {a: 0, b: 0, c: 0, d: 0}
+        })
+    }
+
+    updateResults(data){
+        this.setState({ results: data })
     }
 
     //welcome(serverState) {

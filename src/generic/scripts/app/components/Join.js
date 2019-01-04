@@ -43,7 +43,8 @@ class Join extends Component {
                     placeholder="enter your full name.."
                     required />
                 <button className="btn btn-primary">Join</button>
-                <Link to="/speaker">Start a presentation room</Link>
+                <Link to="/speaker">Start a Presentation Room</Link>
+                <Link to="/board">View Results Scoreboard</Link>
             </form>
         )
     }

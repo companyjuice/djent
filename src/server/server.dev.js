@@ -37,14 +37,14 @@ process.env.PORT = process.env.PORT || 3000
 // connect our DB
 mongoose.connect(process.env.MONGOLAB_URI)
 process.on('uncaughtException', function (err) {
-  console.log(err)
+	console.log(err)
 })
 console.log(
-  `
-  ===
-  [MM] CONNECTED TO DB
-  ===
-  `
+	`
+	===
+	[MM] CONNECTED TO DB
+	===
+	`
 )
 
 // app.use(cors())
@@ -74,98 +74,111 @@ var audience = []
 var speaker = {}
 var questions = require('../generic/scripts/app/utils/questions')
 var currentQuestion = false
+var results = {
+	a: 0,
+	b: 0,
+	c: 0,
+	d: 0,
+}
 
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
 app1.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../../www/index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
+	res.sendFile(path.join(__dirname, '../../www/index.html'), function(err) {
+		if (err) {
+			res.status(500).send(err)
+		}
+	})
 })
 var server1 = app1.listen(3003)
 var ioServer = require('socket.io').listen(server1)
 
 // of a connection on socket.io
 ioServer.sockets.on('connection', function(socket) {
-  
-  // when a member leaves
-  socket.once('disconnect', function() {
+	
+	// when a member leaves
+	socket.once('disconnect', function() {
 
-    // find and remove member from audience array
-    var member = _.findWhere(audience, { 
-      id: this.id
-    })
-    // handle leaving member
-    if (member) {
-      audience.splice(audience.indexOf(member), 1)
-      // broadcast new audience array
-      ioServer.sockets.emit('audience', audience)
-      console.log("ioServer audience disconnected: %s (%s remaining)", member.name, audience.length)
-    } 
-    // handle leaving speaker
-    else if (this.id === speaker.id) {
-      console.log("ioServer speaker has left: %s. Room '%s' is over.", speaker.name, title)
-      speaker = {}
-      title = "Another Untitled Room"
-      ioServer.sockets.emit('end', { title: title, speaker: {} })
-    }
+		// find and remove member from audience array
+		var member = _.findWhere(audience, { 
+			id: this.id
+		})
+		// handle leaving member
+		if (member) {
+			audience.splice(audience.indexOf(member), 1)
+			// broadcast new audience array
+			ioServer.sockets.emit('audience', audience)
+			console.log("ioServer audience disconnected: %s (%s remaining)", member.name, audience.length)
+		} 
+		// handle leaving speaker
+		else if (this.id === speaker.id) {
+			console.log("ioServer speaker has left: %s. Room '%s' is over.", speaker.name, title)
+			speaker = {}
+			title = "Another Untitled Room"
+			ioServer.sockets.emit('end', { title: title, speaker: {} })
+		}
 
-    // remove socket from our connections array
-    connections.splice(connections.indexOf(socket), 1)
+		// remove socket from our connections array
+		connections.splice(connections.indexOf(socket), 1)
 
-    // finally, disconnect from socket io
-    socket.disconnect()
-    console.log("ioServer socket disconnected: %s sockets remaining", connections.length)
-  })
-  
-  // when a member joins
-  socket.on('join', function(payload) {
-    var newMember = {
-      id: this.id,
-      name: payload.name,
-      type: 'member'
-    }
-    this.emit('joined', newMember)
-    // add new member to the audience array
-    audience.push(newMember)
-    // broadcast to all sockets the new audience array
-    ioServer.sockets.emit('audience', audience)
-    console.log("ioServer socket audience joined: %s", payload.name)
-  })
+		// finally, disconnect from socket io
+		socket.disconnect()
+		console.log("ioServer socket disconnected: %s sockets remaining", connections.length)
+	})
+	
+	// when a member joins
+	socket.on('join', function(payload) {
+		var newMember = {
+			id: this.id,
+			name: payload.name,
+			type: 'member'
+		}
+		this.emit('joined', newMember)
+		// add new member to the audience array
+		audience.push(newMember)
+		// broadcast to all sockets the new audience array
+		ioServer.sockets.emit('audience', audience)
+		console.log("ioServer socket audience joined: %s", payload.name)
+	})
 
-  // when a speaker (member.type) joins
-  socket.on('start', function(payload) {
-    speaker.id = this.id
-    speaker.name = payload.name
-    speaker.type = 'speaker'
-    title = payload.title
-    this.emit('joined', speaker)
-    // broadcast to all sockets the speaker object and room title
-    ioServer.sockets.emit('start', { title: title, speaker: speaker })
-    console.log("ioServer room started: '%s' by %s", title, speaker.name)
-  })
+	// when a speaker (member.type) joins
+	socket.on('start', function(payload) {
+		speaker.id = this.id
+		speaker.name = payload.name
+		speaker.type = 'speaker'
+		title = payload.title
+		this.emit('joined', speaker)
+		// broadcast to all sockets the speaker object and room title
+		ioServer.sockets.emit('start', { title: title, speaker: speaker })
+		console.log("ioServer room started: '%s' by %s", title, speaker.name)
+	})
 
 	socket.on('ask', function(question) {
-		currentQuestion = question;
-		//results = {a:0, b:0, c:0, d:0};
-		ioServer.sockets.emit('ask', currentQuestion);
-		console.log("ioServer question asked: '%s'", question.q);
-	});
+		currentQuestion = question
+		results = {a: 0, b: 0, c: 0, d: 0}
+		ioServer.sockets.emit('ask', currentQuestion)
+		console.log("ioServer question asked: '%s'", question.q)
+	})
+	
+	socket.on('answer', function(payload) {
+		results[payload.choice]++
+		ioServer.sockets.emit('results', results)
+		console.log("Answer: '%s' - %j", payload.choice, results)
+	})
 
-  // emit a function with data
-  socket.emit('welcome', {
-    title: title,
-    audience: audience,
-    speaker: speaker,
-    questions: questions,
-    currentQuestion: currentQuestion
-  })
+	// emit a function with data
+	socket.emit('welcome', {
+		title: title,
+		audience: audience,
+		speaker: speaker,
+		questions: questions,
+		currentQuestion: currentQuestion,
+		results: results
+	})
 
-  connections.push(socket)
-  console.log("ioServer socket connected: %s", socket.id)
-  console.log("ioServer socket connections: %s", connections.length)
+	connections.push(socket)
+	console.log("ioServer socket connected: %s", socket.id)
+	console.log("ioServer socket connections: %s", connections.length)
 })
 
 console.log("Polling server is running at 'http://localhost:3003'")
