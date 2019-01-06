@@ -145,7 +145,8 @@ class App extends Component {
                         {/* <Route exact path="/" component={Main} /> */}
                         <Route exact path="/" render={(props) => (
                             <div>
-                                <Audience {...this.state} emit={this.emit} />
+                                {/* <Audience {...this.state} emit={this.emit} /> */}
+                                
                                 <Main {...this.state} />
                             </div>
                         )} />
@@ -157,6 +158,12 @@ class App extends Component {
                         {/* <Route status={404} path="*" /> */}
 
                         {/* <Route exact path="/" component={Audience} /> */}
+                        <Route exact path="/audience" render={(props) => (
+                            <div>
+                                <Audience {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
                         {/* <Route name="speaker" path="/speaker" component={Speaker} {...this.state} /> */}
                         <Route exact path="/speaker" render={(props) => (
                             <div>

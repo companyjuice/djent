@@ -22,9 +22,8 @@ class Header extends Component {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="title" color="inherit">
-                        {this.props.title} 
                         -||- octogon.io 
-                        -||- Music Generator
+                        -||- Room: {this.props.title}
                     </Typography>
                     <Typography variant="subtitle1" color="inherit">
                         -||- Speaker: {this.props.speaker.name}

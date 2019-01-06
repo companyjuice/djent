@@ -111,7 +111,6 @@ export default class Main extends Component {
     }
 
     componentWillUnmount = () => {
-        // [MM] causing an issue? Can't perform a React state update on an unmounted component
         window.removeEventListener('popstate', this.backToHome)
     }
 
@@ -227,7 +226,7 @@ export default class Main extends Component {
 
                     {/* [MM] chat */}
                     <div style={{height: '100%'}} >
-                        {this.props.children}
+                        THIS.PROPS.CHILDREN: {this.props.children}
                     </div>
 
                     <Player
