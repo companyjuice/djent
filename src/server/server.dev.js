@@ -5,7 +5,8 @@ import path from 'path'
 import _ from 'underscore'
 
 import mongoose from 'mongoose'
-import { utils } from 'mocha';
+
+// import { utils } from 'mocha';
 
 // import { renderToString } from 'react-dom/server'
 // import { Provider } from 'react-redux'
@@ -16,16 +17,16 @@ import { utils } from 'mocha';
 // //import routes from '../generic/scripts/app/routes'
 // import createHistory from 'history/createMemoryHistory'
 // import DevTools from '../generic/scripts/app/containers/DevTools'
-// import cors from 'cors'
+import cors from 'cors'
 // import webpack from 'webpack'
-// [MM]
+// // [MM]
 // import webpackConfig from '../../webpack.config.dev'
 // //import webpackConfig from '../../webpack.config'
 // const compiler = webpack(webpackConfig)
 // import User from './models/User'
-// import passport from 'passport'
-// require('../../config/passport')(passport)
-// import SocketIo from 'socket.io'
+import passport from 'passport'
+require('../../config/passport')(passport)
+import SocketIo from 'socket.io'
 
 // const app = express()
 // [MM] polling
@@ -47,8 +48,8 @@ console.log(
 	`
 )
 
-// app.use(cors())
-// app.use(passport.initialize())
+app1.use(cors())
+app1.use(passport.initialize())
 
 // console.log(
 //   `
@@ -81,6 +82,17 @@ var results = {
 	d: 0,
 }
 
+// load routers
+const messageRouter = express.Router();
+const usersRouter = express.Router();
+const channelRouter = express.Router();
+require('./routes/message_routes')(messageRouter);
+require('./routes/channel_routes')(channelRouter);
+require('./routes/user_routes')(usersRouter, passport);
+app1.use('/api', messageRouter);
+app1.use('/api', usersRouter);
+app1.use('/api', channelRouter);
+
 app1.use(express.static('./www'))
 app1.use(express.static('./node_modules/bootstrap/dist'))
 app1.get('/*', function(req, res) {
@@ -90,8 +102,18 @@ app1.get('/*', function(req, res) {
 		}
 	})
 })
-var server1 = app1.listen(3003)
-var ioServer = require('socket.io').listen(server1)
+const server1 = app1.listen(3003, 'localhost', function(err) {
+	if (err) {
+		console.log(err)
+		return
+	}
+	console.log('server listening on port: %s', 3003)
+})
+const ioServer = require('socket.io').listen(server1)
+//const ioServer = new SocketIo(server1, {path: '/'})
+
+const ioServer2 = new SocketIo(server1, {path: '/api/chat'})
+const socketEvents = require('./socketEvents')(ioServer2)
 
 // of a connection on socket.io
 ioServer.sockets.on('connection', function(socket) {
@@ -175,6 +197,37 @@ ioServer.sockets.on('connection', function(socket) {
 		currentQuestion: currentQuestion,
 		results: results
 	})
+
+
+
+	// socket.join('Tracking Room 1');
+    // socket.on('chat mounted', function(user) {
+    //   // TODO: Does the server need to know the user?
+    //   socket.emit('receive socket', socket.id)
+    // })
+    // socket.on('leave channel', function(channel) {
+    //   socket.leave(channel)
+    // })
+    // socket.on('join channel', function(channel) {
+    //   socket.join(channel.name)
+    // })
+    // socket.on('new message', function(msg) {
+    //   socket.broadcast.to(msg.channelID).emit('new bc message', msg);
+    // });
+    // socket.on('new channel', function(channel) {
+    //   socket.broadcast.emit('new channel', channel)
+    // });
+    // socket.on('typing', function (data) {
+    //   socket.broadcast.to(data.channel).emit('typing bc', data.user);
+    // });
+    // socket.on('stop typing', function (data) {
+    //   socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
+    // });
+    // socket.on('new private channel', function(socketID, channel) {
+    //   socket.broadcast.to(socketID).emit('receive private channel', channel);
+    // })
+
+
 
 	connections.push(socket)
 	console.log("ioServer socket connected: %s", socket.id)

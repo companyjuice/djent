@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { welcomePage } from '../actions/actions'
 import { connect } from 'react-redux'
 import { Button, Form, FormGroup, FormControl } from 'react-bootstrap' // Input
@@ -19,11 +19,11 @@ class WelcomePage extends Component {
     };
   }
   componentDidMount() {
-    //this.refs.usernameInput.getInputDOMNode().focus();
+    //this.refs.usernameInput.getInputDOMNode().focus()
   }
   handleChange(event) {
     if (event.target.name === 'username') {
-      this.setState({ username: event.target.value });
+      this.setState({ username: event.target.value })
     }
   }
   handleSubmit() {

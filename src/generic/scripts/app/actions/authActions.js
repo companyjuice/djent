@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
-import { browserHistory } from 'react-router';
+import createBrowserHistory from "history/createBrowserHistory";
+const browserHistory = createBrowserHistory();
 import fetch from 'isomorphic-fetch';
 import { Cookies } from 'react-cookie';
 

@@ -6,6 +6,17 @@ import { Provider } from 'react-redux'
 import Main from '../containers/Main'
 // [MM] chat
 import DevTools from '../containers/DevTools'
+import SignIn from '../components/SignIn'
+import ChatContainer from '../containers/ChatContainer'
+import SignUp from '../components/SignUp'
+import Welcome from '../components/WelcomePage'
+//import App from '../containers/App'
+import {checkAuth} from '../actions/authActions'
+const requireAuth = (nextState, replace) => {
+    if(!checkAuth()) {
+        return replace(null, '/signin')
+    }
+}
 // [MM] polling
 import ioClient from 'socket.io-client'
 import Header from './Header'
@@ -146,7 +157,7 @@ class App extends Component {
                         <Route exact path="/" render={(props) => (
                             <div>
                                 {/* <Audience {...this.state} emit={this.emit} /> */}
-                                
+
                                 <Main {...this.state} />
                             </div>
                         )} />
@@ -178,6 +189,44 @@ class App extends Component {
                                 <Main {...this.state} />
                             </div>
                         )} />
+
+                        
+                        {/* <Route path="/welcome" component={WelcomePage} /> */}
+                        <Route exact path="/welcome" render={(props) => (
+                            <div>
+                                <Welcome {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
+                        {/* <Route path="/signup" component={SignUp} /> */}
+                        <Route exact path="/signup" render={(props) => (
+                            <div>
+                                <SignUp {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
+                        {/* <Route path="/signin" component={SignIn} /> */}
+                        <Route exact path="/signin" render={(props) => (
+                            <div>
+                                <SignIn {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
+                        {/* <Route path="/signout" component={SignOut} /> */}
+                        {/* <Route exact path="/signout" render={(props) => (
+                            <div>
+                                <SignOut {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} /> */}
+                        {/* <Route path="/chat" component={ChatContainer}></Route> */}
+                        <Route exact path="/chat" render={(props) => (
+                            <div>
+                                <ChatContainer {...this.state} emit={this.emit} />
+                                <Main {...this.state} />
+                            </div>
+                        )} />
+
                     </Switch>
                 </Router>
 
