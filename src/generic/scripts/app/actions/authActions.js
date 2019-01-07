@@ -5,7 +5,7 @@ import fetch from 'isomorphic-fetch';
 import { Cookies } from 'react-cookie';
 
 export function receiveAuth() {
-  const user = Cookies.load('username');
+  const user = 'marty' // Cookies.get('username')
   return {
     type: types.AUTH_LOAD_SUCCESS,
     user
@@ -13,7 +13,7 @@ export function receiveAuth() {
 }
 
 export function checkAuth() {
-  if (Cookies.load('username')) {
+  if (1 == 1) { // Cookies.get('username')
     return true;
   }
   return false;
@@ -53,7 +53,7 @@ export function signOut() {
     return fetch('/api/signout')
       .then(response => {
         if(response.ok) {
-          Cookies.remove('username')
+          // Cookies.remove('username')
           dispatch(receiveSignOut())
           browserHistory.push('/')
         }
@@ -73,7 +73,7 @@ export function signUp(user) {
       })
       .then(response => {
         if(response.ok) {
-          Cookies.save('username', user.username)
+          // Cookies.set('username', user.username)
           dispatch(receiveUser(user.username));
           browserHistory.push('/chat');
         }
@@ -110,7 +110,7 @@ export function signIn(user) {
       })
       .then(response => {
         if(response.ok) {
-          //Cookies.save('username', user.username)
+          // Cookies.set('username', user.username)
           dispatch(receiveSignIn(user.username));
           browserHistory.push('/chat');
         }

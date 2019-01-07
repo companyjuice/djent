@@ -17,6 +17,7 @@ const requireAuth = (nextState, replace) => {
         return replace(null, '/signin')
     }
 }
+import { CookiesProvider, withCookies } from 'react-cookie'
 // [MM] polling
 import ioClient from 'socket.io-client'
 import Header from './Header'
@@ -27,9 +28,11 @@ import Board from './Board'
 
 class App extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         
+        const { cookies } = props
+
         this.state = {
             status: 'disconnected',
             title: '',
@@ -41,7 +44,8 @@ class App extends Component {
             //speaker: '',
             questions: [],
             currentQuestion: false,
-            results: {}
+            results: {},
+            name: cookies.get('name')
         }
 
         this.connect = this.connect.bind(this)
@@ -144,6 +148,7 @@ class App extends Component {
 
     render = () => (
         <Provider store={this.props.store}>
+            <CookiesProvider>
             <div style={{height: '100%'}}>
                 
                 {/* <h1 style={{textAlign: 'center'}}>HEY HEY HEY from React -- Live Polling</h1> */}
@@ -234,8 +239,9 @@ class App extends Component {
                 <DevTools />
 
             </div>
+            </CookiesProvider>
         </Provider>
     )
 }
 
-export default App
+export default withCookies(App)
