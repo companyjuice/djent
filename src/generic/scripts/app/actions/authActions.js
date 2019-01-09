@@ -13,7 +13,7 @@ export function receiveAuth() {
 }
 
 export function checkAuth() {
-  if (1 == 1) { // Cookies.get('username')
+  if (1 === 1) { // Cookies.get('username')
     return true;
   }
   return false;
