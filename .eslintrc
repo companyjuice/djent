@@ -1,7 +1,21 @@
 {
     "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "module",
+        "impliedStrict": true,
+        "ecmaFeatures": {
+            "jsx": true,
+            "impliedStrict": true,
+            "globalReturn": false,
+            "experimentalObjectRestSpread": true,
+            "legacyDecorators": true
+        }
+    },
     "plugins": [
-        "react"
+        "babel",
+        "react",
+        "jest"
     ],
     "env": {
         "browser": true,

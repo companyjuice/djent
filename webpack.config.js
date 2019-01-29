@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 //const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
@@ -43,6 +43,7 @@ const config = (env) => {
 
   return {
     mode: 'development',
+    target: 'web',
     devtool: 'inline-source-map',
     entry: {
       main: ['react-hot-loader/patch', path.join(cwd, entryJSFile)],
@@ -75,16 +76,30 @@ const config = (env) => {
           exclude: /.*node_modules((?!immutable-ext).)*$/,
         },
         {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          use: [{
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ['@babel/plugin-proposal-class-properties', { loose: true }],
+                [require('@babel/plugin-proposal-object-rest-spread')]
+              ],
+              presets: [
+                '@babel/react', 
+                '@babel/preset-env'
+              ]
+            }
+          }]
+        },
+        {
           test: /\.(sass|s?css)$/,
           exclude: /node_modules/,
           use: [
             devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
             {
-              loader: 'css-loader',
-              options: {
-                minimize: isProduction,
-                debug: !isProduction,
-              },
+              loader: 'css-loader'
             },
             {
               loader: 'postcss-loader',
@@ -113,7 +128,7 @@ const config = (env) => {
           test: /\.html$/,
           use: [
             {
-              loader: "html-loader",
+              loader: 'html-loader',
               options: { minimize: true }
             }
           ]

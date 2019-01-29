@@ -25,11 +25,64 @@ import Header from './Header'
 import Audience from './Audience'
 import Speaker from './Speaker'
 import Board from './Board'
+// [MM] rrwa
+import { RRWAEngine, actionCreators, webAudioReducer } from 'react-redux-webaudio'
+import RRWAExamplesApp from '../components/RRWAExamplesApp'
+// [MM] schmix
+// import Apple from '../containers/App'
+// import Schmix from '../containers/Schmix'
+// [MM] audio recorder
+// import AudioRecorder from 'react-audio-recorder'
+// [MM] audio player
+// import { PlayButton, Timer } from 'react-soundplayer/components'
+// // it's just an alias for `withSoundCloudAudio` but makes code clearer
+// import { withCustomAudio, withSoundCloudAudio } from 'react-soundplayer/addons'
+// // audio source
+// const streamUrl = 'http://localhost:3003/assets/audio/guitar/sixth-9-chord.mp3'
+// // some track meta information
+// const trackTitle = 'Great audio by -||- artist'
+// const clientId = '1c344815b44361828c71cf2be85e4262';
+// const resolveUrl = 'https://soundcloud.com/martymcgee';
+// const AWSSoundPlayer = withCustomAudio( props => {
+//     const { trackTitle } = props
+//     console.log("props:", props)
+
+//     return (
+//         <div>
+//             <PlayButton {...props} />
+//             <h2>{trackTitle}</h2>
+//             <Timer {...props} />
+//         </div>
+//     )
+// })
+// const Player = withSoundCloudAudio(props => {
+//     let { track, currentTime } = props;
+
+//     return (
+//       <div className="custom-player">
+//         <PlayButton
+//           className="custom-player-btn"
+//           onPlayClick={() => {
+//             console.log('play button clicked!');
+//           }}
+//           {...props} />
+//         <h2 className="custom-player-title">
+//           {track ? track.title : 'Loading...'}
+//         </h2>
+//         <Timer 
+//           className="custom-player-timer"
+//           duration={track ? track.duration / 1000 : 0} 
+//           currentTime={currentTime} 
+//           {...props} />
+//       </div>
+//     );
+// });
 
 class App extends Component {
 
     constructor(props) {
         super(props)
+        self = this
         
         const { cookies } = props
 
@@ -149,6 +202,7 @@ class App extends Component {
     render = () => (
         <Provider store={this.props.store}>
             <CookiesProvider>
+            <RRWAEngine store={this.props.store} />
             <div style={{height: '100%'}}>
                 
                 {/* <h1 style={{textAlign: 'center'}}>HEY HEY HEY from React -- Live Polling</h1> */}
@@ -162,7 +216,23 @@ class App extends Component {
                         <Route exact path="/" render={(props) => (
                             <div>
                                 {/* <Audience {...this.state} emit={this.emit} /> */}
-
+                                {/* <Apple>
+                                    <Schmix/>
+                                </Apple> */}
+                                {/* <AudioRecorder /> */}
+                                {/* <AWSSoundPlayer
+                                    resolveUrl={resolveUrl}
+                                    clientId={clientId}
+                                    streamUrl={streamUrl}
+                                    trackTitle={trackTitle} 
+                                    preloadType="auto" 
+                                /> */}
+                                {/* <Player
+                                    clientId={clientId}
+                                    resolveUrl={resolveUrl}
+                                    onReady={() => console.log('track is loaded!')}   
+                                /> */}
+                                <RRWAExamplesApp />
                                 <Main {...this.state} />
                             </div>
                         )} />
@@ -243,5 +313,13 @@ class App extends Component {
         </Provider>
     )
 }
+
+/**
+ * A container component that will render within the component tree of <App />
+ */
+// const Container = self.connect(
+//     state => state,
+//     dispatch => ({ makeNoise: () => dispatch(actionCreators.emit(audioEvent)) })
+// )(App)
 
 export default withCookies(App)

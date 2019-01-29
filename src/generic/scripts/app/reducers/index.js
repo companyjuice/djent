@@ -18,6 +18,15 @@ import environment from './environment'
 // import {combineReducers} from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
+// [MM] rrwa
+import { RRWAEngine, actionCreators, webAudioReducer } from 'react-redux-webaudio'
+import rrwa from './rrwa'
+
+// [MM] schmix
+// import { combineReducers } from 'redux'
+// import { delayReducer as delay } from '../components/effects/Delay/Delay.reducers'
+//import tracks from '../containers/Schmix/reducers.js'
+
 const rootReducer = combineReducers({
     config,
     sequences,
@@ -34,7 +43,13 @@ const rootReducer = combineReducers({
     welcomePage,
     userValidation,
     environment,
-    formReducer
+    formReducer,
+    // [MM] rrwa
+    webAudioReducer,
+    rrwa,
+    // [MM] schmix
+    // delay,
+    //tracks,
 })
 
 export default rootReducer

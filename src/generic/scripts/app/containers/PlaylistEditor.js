@@ -5,7 +5,7 @@ import { curry, insert, update, remove } from 'ramda'
 
 import Generator from 'components/Generator'
 import PlaylistTrack from 'components/PlaylistTrack'
-import ReorderableList from 'components/ReorderableList'
+//import ReorderableList from 'components/ReorderableList'
 
 import {
   updateAudioPlaylist,
@@ -203,11 +203,11 @@ class PlaylistEditor extends Component {
     return (
       <div>
         <div className="u-mb05">
-          <ReorderableList
+          {/* <ReorderableList
             listItems={listItems}
             onListItemClick={this.onListItemClick}
             onReorder={this.onReorder}
-          />
+          /> */}
         </div>
         {audioPlaylist.length > 0 &&
           audioPlaylist.length < this.trackLimit && (
